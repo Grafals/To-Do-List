@@ -57,7 +57,6 @@ function toggleCompletion(index) {
     listItem.classList.toggle('completed');
 }
 
-
 function createCustomCursor() {
     const cursor = document.getElementById('customCursor');
     let mouseX = 0, mouseY = 0;
