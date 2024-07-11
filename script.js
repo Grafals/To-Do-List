@@ -1,4 +1,4 @@
-const myFirstArray = [];
+const myFirstArray = JSON.parse(localStorage.getItem('todos')) || [];
 
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#input1').addEventListener('keypress', (event) => {
@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     createCustomCursor();
     animateBackground();
+    renderTodos();
 });
 
 function onEnter(event) {
@@ -21,6 +22,7 @@ function addTodo() {
     if (firstTodo) {
         myFirstArray.push(firstTodo);
         document.getElementById('input1').value = '';
+        saveTodos();
         renderTodos();
     } 
 }
@@ -32,7 +34,7 @@ function renderTodos() {
         const listItem = document.createElement('li');
         listItem.textContent = myFirstArray[i];
 
-        const deleteButton = document.createElement('button');
+        const deleteButton = document.createElement('button');s
         deleteButton.textContent = 'Delete';
         deleteButton.onclick = () => {
             deleteTask(i);
@@ -49,13 +51,20 @@ function renderTodos() {
 
 function deleteTask(index) {
     myFirstArray.splice(index, 1);
+    saveTodos();
     renderTodos();
 }
 
 function toggleCompletion(index) {
     const listItem = document.getElementById('added-todo').children[index];
     listItem.classList.toggle('completed');
+    saveTodos();
 }
+
+function saveTodos() {
+    localStorage.setItem('todos', JSON.stringify(myFirstArray));
+}
+
 
 function createCustomCursor() {
     const cursor = document.getElementById('customCursor');
